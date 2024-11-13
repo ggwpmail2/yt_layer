@@ -10,19 +10,11 @@ app.get('/stream', (req, res) => {
         return res.status(400).send('URL видео не указан');
     }
 
-    // Устанавливаем заголовок Accept-Ranges для поддержки диапазонов
-    res.setHeader('Accept-Ranges', 'bytes');
+    // Запускаем yt-dlp с параметрами для выбора разрешения, видеокодека и аудиокодека
+    const process = spawn('yt-dlp', ['-f', 'bv*+ba/b', '-S', 'res:720,vcodec:h264,acodec:aac', '-o', '-', videoUrl]);
 
-    // Запускаем yt-dlp с настройкой качества и выводом в stdout
-    //const process = spawn('yt-dlp', ['-f', 'bestvideo[height<=720]+bestaudio/best[height<=720]', '-o', '-', videoUrl]);
-    const process = spawn('yt-dlp', ['-f', 'bestvideo[height<=720]+bestaudio/best', '-o', '-', videoUrl]);
-
-    // Обрабатываем диапазон запроса, чтобы поддерживать перемотку
-    req.on('range', (range) => {
-        const rangeHeader = range.split('=')[1];
-        const [start, end] = rangeHeader.split('-');
-        res.setHeader('Content-Range', `bytes ${start}-${end}`);
-    });
+    // Устанавливаем заголовок для передачи видео в формате MP4
+    res.setHeader('Content-Type', 'video/mp4');
 
     // Передаем поток данных от yt-dlp клиенту
     process.stdout.pipe(res);
