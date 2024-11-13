@@ -12,7 +12,8 @@ app.get('/stream', (req, res) => {
 
     // Запускаем yt-dlp с параметрами для выбора разрешения, видеокодека и аудиокодека
   //  const process = spawn('yt-dlp', ['-f', 'bv*+ba/b', '-S', 'res:720,vcodec:h264,acodec:aac', '-o', '-', videoUrl]);
-    const process = spawn('yt-dlp', ['-f', 'bestvideo+bestaudio', '-o', '-', videoUrl]);
+   // const process = spawn('yt-dlp', ['-f', 'bestvideo+bestaudio', '-o', '-', videoUrl]);
+    const process = spawn('yt-dlp', ['-o', '-', videoUrl]);
 
     // Устанавливаем заголовок для передачи видео в формате MP4
     res.setHeader('Content-Type', 'video/mp4');
