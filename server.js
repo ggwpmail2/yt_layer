@@ -14,7 +14,8 @@ app.get('/stream', (req, res) => {
     res.setHeader('Accept-Ranges', 'bytes');
 
     // Запускаем yt-dlp с настройкой качества и выводом в stdout
-    const process = spawn('yt-dlp', ['-f', 'bestvideo[height<=720]+bestaudio/best[height<=720]', '-o', '-', videoUrl]);
+    //const process = spawn('yt-dlp', ['-f', 'bestvideo[height<=720]+bestaudio/best[height<=720]', '-o', '-', videoUrl]);
+    const process = spawn('yt-dlp', ['-f', 'bestvideo[height<=720]+bestaudio/best', '-o', '-', videoUrl]);
 
     // Обрабатываем диапазон запроса, чтобы поддерживать перемотку
     req.on('range', (range) => {
