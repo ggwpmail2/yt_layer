@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Видео-поток с YouTube</title>
+</head>
+<body>
+    <h1>Введите ссылку на видео YouTube</h1>
+    <form id="videoForm">
+        <input type="text" id="videoUrl" placeholder="Введите URL видео" required>
+        <button type="submit">Показать видео</button>
+    </form>
+    <div id="videoContainer" style="display: none;">
+        <h2>Видео</h2>
+        <video id="videoPlayer" controls autoplay width="600">
+            Ваш браузер не поддерживает HTML5 видео.
+        </video>
+    </div>
+
+    <script>
+        const form = document.getElementById('videoForm');
+        const videoContainer = document.getElementById('videoContainer');
+        const videoPlayer = document.getElementById('videoPlayer');
+
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const videoUrl = document.getElementById('videoUrl').value;
+
+            // Устанавливаем URL на видео-поток и показываем плеер
+            videoPlayer.src = `http://94.159.111.47:3000/stream?url=${encodeURIComponent(videoUrl)}`;
+            videoContainer.style.display = 'block';
+        });
+    </script>
+</body>
+</html>
